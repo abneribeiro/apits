@@ -5,9 +5,10 @@ import logger from '../../utils/logger';
 
 const defaultUsers = [
   {
+    id: '123e4567-e89b-12d3-a456-426614174001',
     email: 'admin@example.com',
     username: 'admin',
-    password: 'Admin123!',
+    password: 'Password123!',
     firstName: 'Admin',
     lastName: 'User',
     role: 'admin' as const,
@@ -15,9 +16,20 @@ const defaultUsers = [
     isEmailVerified: true,
   },
   {
+    id: '123e4567-e89b-12d3-a456-426614174000',
+    email: 'test@example.com',
+    username: 'testuser',
+    password: 'Password123!',
+    firstName: 'Test',
+    lastName: 'User',
+    role: 'user' as const,
+    isActive: true,
+    isEmailVerified: true,
+  },
+  {
     email: 'moderator@example.com',
     username: 'moderator',
-    password: 'Moderator123!',
+    password: 'Password123!',
     firstName: 'Moderator',
     lastName: 'User',
     role: 'moderator' as const,
@@ -27,7 +39,7 @@ const defaultUsers = [
   {
     email: 'user@example.com',
     username: 'user',
-    password: 'User123!',
+    password: 'Password123!',
     firstName: 'Regular',
     lastName: 'User',
     role: 'user' as const,
@@ -45,7 +57,7 @@ export const seedUsers = async (): Promise<void> => {
       await db.insert(users).values({
         ...userData,
         password: hashedPassword,
-      });
+      }).onConflictDoNothing();
     }
 
     logger.info(`Created ${defaultUsers.length} users`);

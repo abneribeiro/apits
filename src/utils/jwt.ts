@@ -27,7 +27,10 @@ export const generateToken = (payload: Omit<JwtPayload, 'iat' | 'exp'>): string 
 };
 
 export const verifyToken = (token: string): JwtPayload => {
-  return jwt.verify(token, JWT_SECRET) as JwtPayload;
+  return jwt.verify(token, JWT_SECRET, {
+    issuer: 'user-management-api',
+    audience: 'api-users'
+  }) as JwtPayload;
 };
 
 export const generateRefreshToken = (): string => {

@@ -71,8 +71,8 @@ export const seedPermissions = async (): Promise<void> => {
   try {
     logger.info('Starting permissions seeding...');
 
-    // Create permissions
-    const createdPermissions = await db.insert(permissions).values(defaultPermissions).returning();
+    // Create permissions with conflict handling
+    const createdPermissions = await db.insert(permissions).values(defaultPermissions).onConflictDoNothing().returning();
     logger.info(`Created ${createdPermissions.length} permissions`);
 
     // Create role-permission mappings
